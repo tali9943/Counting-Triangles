@@ -1,76 +1,93 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
-// funzione per inizializzare la matrice di adiacenza con valori 0
-void initializeAdjMatrix(int adj_matrix[][100], int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            adj_matrix[i][j] = 0;
-        }
-    }
-}
+int** createAdjMatrix(){
+    string line;
+    ifstream myfile("email-Eu-core.txt");
 
-// funzione per generare archi casuali
-void generateRandomEdges(int adj_matrix[][100], int n) {
-    srand(time(0)); // inizializza il generatore di numeri casuali
-    for (int i = 0; i < n; i++) {
-        for (int j = i+1; j < n; j++) {
-            int rand_num = rand() % 2; // genera un numero casuale tra 0 e 1
-            if (rand_num == 1) {
-                adj_matrix[i][j] = 1;
-                adj_matrix[j][i] = 1;
+    if (myfile.is_open()){
+        cout <<"prova";
+        // Read the first line to determine the number of vertices
+        getline(myfile, line);
+        int node = 1005 ; //stoi(line);
+
+        // Allocate 2D array for the adjacency matrix
+        int **adjMatrix = new int *[node];
+        for (int i = 0; i < node; i++){
+            adjMatrix[i] = new int[node];
+        }
+
+        // Initialize the adjacency matrix to 0
+        for (int i = 0; i < node; i++){
+            for (int j = 0; j < node; j++){
+                adjMatrix[i][j] = 0;
             }
         }
-    }
-}
 
-// funzione per calcolare il numero di triangoli nel grafo
-int countTriangles(int adj_matrix[][100], int n) {
-    int num_triangles = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = i+1; j < n; j++) {
-            if (adj_matrix[i][j] == 1) {
-                for (int k = j+1; k < n; k++) {
-                    if (adj_matrix[j][k] == 1 && adj_matrix[k][i] == 1) {
-                        num_triangles++;
-                    }
-                }
+        // Read the rest of the lines and update the adjacency matrix
+        int i, j;
+        while (getline(myfile, line)){
+            i = stoi(line.substr(0, line.find(" ")));
+            j = stoi(line.substr(line.find(" ") + 1));
+            if(i!=j){
+                adjMatrix[i][j] = 1;
+                adjMatrix[i][j] = 1;
             }
+
         }
-    }
-    return num_triangles;
-}
 
-// funzione per stampare la matrice di adiacenza
-void printAdjMatrix(int adj_matrix[][100], int n) {
-    cout << "Matrice di adiacenza:" << endl;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cout << adj_matrix[i][j] << " ";
+        // Print the adjacency matrix
+        for (int i = 0; i < node; i++){
+            for (int j = 0; j < node; j++){
+                cout << adjMatrix[i][j] << " ";
+            }
+            cout << endl;
         }
-        cout << endl;
+
+        return adjMatrix;
+
+
+        // Close the file
+        myfile.close();
     }
-}
 
-int main() {
-    int n; // numero di vertici
-    cout << "Inserisci il numero di vertici: ";
-    cin >> n;
-
-    int adj_matrix[100][100]; // matrice di adiacenza
-
-    initializeAdjMatrix(adj_matrix, n); // inizializza la matrice di adiacenza
-
-    generateRandomEdges(adj_matrix, n); // genera archi casuali
-
-    int num_triangles = countTriangles(adj_matrix, n); // calcola il numero di triangoli
-
-    cout << "Il numero di triangoli nel grafo e': " << num_triangles << endl;
-
-    printAdjMatrix(adj_matrix, n); // stampa la matrice di adiacenza
+    else{
+        cout << "Unable to open file";
+    }
 
     return 0;
+}
+
+
+int countTriangles(int** matrix, int n){
+   int numbers_triangles = 0;
+
+   for(int i = 0; i < n; i++){
+      for(int j = i+1; j < n; j++){
+         if(matrix[i][j] == 1){
+            for(int z = j+1; z < n; z++){
+               if(matrix[j][z] == 1 && matrix[z][i] == 1){
+                  numbers_triangles++;
+               }
+            }
+         }
+      }
+   }
+   return numbers_triangles;
+}
+
+
+int main(){
+
+
+    auto matrix = createAdjMatrix();
+    //cout <<matrix;
+
+    int numbers = countTriangles(matrix, 1005);
+    cout << "Numbers of triangles is: " << numbers << endl;
+
+
 }
