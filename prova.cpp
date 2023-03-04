@@ -4,15 +4,38 @@
 
 using namespace std;
 
-int** createAdjMatrix(){
+
+int MaxNodeFound(){
     string line;
-    ifstream myfile("email-Eu-core.txt");
+    ifstream myfile("testoprova.txt");
+    int maxNode = 0;
 
     if (myfile.is_open()){
+
+        while (getline(myfile, line)){  
+            int elem = stoi(line); 
+            if(elem > maxNode){
+                maxNode = elem;
+                //controllo maxnode
+            }
+        }
+        myfile.close();
+    }
+    else{
+        cout << "Unable to open file";
+    }
+    return maxNode;
+}
+
+int** createAdjMatrix(int node){
+    string line;
+    ifstream myfile("testoprova.txt");
+ 
+    if (myfile.is_open()){
         cout <<"prova";
+        
         // Read the first line to determine the number of vertices
         getline(myfile, line);
-        int node = 1005 ; //stoi(line);
 
         // Allocate 2D array for the adjacency matrix
         int **adjMatrix = new int *[node];
@@ -31,7 +54,7 @@ int** createAdjMatrix(){
         int i, j;
         while (getline(myfile, line)){
             i = stoi(line.substr(0, line.find(" ")));
-            j = stoi(line.substr(line.find(" ") + 1));
+            j = stoi(line.substr(1, line.find(" ")));
             if(i!=j){
                 adjMatrix[i][j] = 1;
                 adjMatrix[i][j] = 1;
@@ -82,12 +105,13 @@ int countTriangles(int** matrix, int n){
 
 int main(){
 
-
-    auto matrix = createAdjMatrix();
+    int n = MaxNodeFound();
+    cout << "number" << n <<'\n';
+    auto matrix = createAdjMatrix(n);
     //cout <<matrix;
 
-    int numbers = countTriangles(matrix, 1005);
-    cout << "Numbers of triangles is: " << numbers << endl;
+   // int numbers = countTriangles(matrix, 1005);
+    //cout << "Numbers of triangles is: " << numbers << endl;
 
 
 }

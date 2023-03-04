@@ -6,23 +6,32 @@
 using namespace std;
 
 
-
+//funziona
 int** creaMatrix(int n){
+   int **matrix = new int *[n];
 
-   int** matrix= 0;
-   matrix = new int*[n];
+   for (int i = 0; i < n; i++){
+      matrix[i] = new int[n];
+   }
+
+   // Initialize the adjacency matrix to 0
+   for (int i = 0; i < n; i++){
+      for (int j = 0; j < n; j++){
+            matrix[i][j] = 0;
+      }
+   }
    return matrix;
 }
 
 
+//funziona
 void prinMatrix(int** matrix, int n){
-   cout << "Matrice di adiacenza:" << endl;
-   for(int i = 0; i < n; i++){
-      for(int j = 0; j < n; j++){
-         cout << matrix[i][j] << " ";
+      for (int i = 0; i < n; i++){
+         for (int j = 0; j < n; j++){
+               cout << matrix[i][j] << " ";
+         }
+         cout << endl;
       }
-      cout << endl;
-   }
 }
 
 
@@ -30,7 +39,7 @@ void prinMatrix(int** matrix, int n){
 
 
 
-//conta triangoli
+//conta triangoli ??????????????
 int countTriangles(int** matrix, int n){
    int numbers_triangles = 0;
 
@@ -56,18 +65,18 @@ int main(){
    //cout << "Inserisci il numero di vertici: ";
    //cin >> n;
 
-   int n = MaxNodeFound();
+   int max,min = MaxMinNode();
 
-   cout << n <<'\n';
+   cout << max <<'\n',
+   cout <<min <<'\n';
+   int n = max-min;
+
+
+   cout <<"NODE: " << n <<'\n';
    auto matrix = creaMatrix(n);
 
-   cout<<"ehi" <'\n';
    edges(matrix,n);
-
-   //generateEdges(matrix, n);
-
-   cout << "Dopo: ";
-   prinMatrix(matrix, n);
+   //prinMatrix(matrix, n);
 
    int numbers = countTriangles(matrix, n);
    cout << "Numbers of triangles is: " << numbers << endl;
