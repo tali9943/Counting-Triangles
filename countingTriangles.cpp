@@ -62,23 +62,21 @@ int countTriangles(int** matrix, int n){
    auto end = std::chrono::high_resolution_clock::now();
 
    std::chrono::duration<double> total_time = end - start;
-   
-   cout << "Tempo di esecuzione: " << total_time.count() << " secondi" << std::endl;
+
+   cout << "Tempo calcolo traingoli: " << total_time.count() << " secondi" << std::endl;
 
    return numbers_triangles;
 }
 
 
 
-int main(){
+void esecution(){
 
-   //int n; // numero di vertici
-   //cout << "Inserisci il numero di vertici: ";
-   //cin >> n;
+   auto start = std::chrono::high_resolution_clock::now();
 
-   //int max, min = MaxMinNode();
+   int max = MaxNode()+1;
 
-   int max = MaxNodeFound()+1;
+   //int max = MaxNodeFound()+1;
    int n = max;
 
 
@@ -89,7 +87,19 @@ int main(){
    //prinMatrix(matrix, n);
 
    int numbers = countTriangles(matrix, n);
+
    cout << "Numbers of triangles is: " << numbers << endl;
+
+   auto end = std::chrono::high_resolution_clock::now();
+   std::chrono::duration<double> total_time = end - start;
+   cout << "Tempo totale di esecuzione: " << total_time.count() << " secondi" << std::endl;
+
+}
+
+int main(){
+
+   esecution();
+
 
    return 0;
 }

@@ -10,7 +10,7 @@ using namespace std;
 
 void edges(int** matrix, int n){
     string line;
-    ifstream myfile("./Databases/Email-Enron.txt");
+    ifstream myfile("./Databases/facebook_combined.txt");
     if (myfile.is_open()){
 
         while (getline(myfile, line)){   
@@ -40,7 +40,7 @@ void edges(int** matrix, int n){
 
 int MaxNodeFound(){
     string line;
-    ifstream myfile("./Databases/Email-Enron.txt");
+    ifstream myfile("./Databases/facebook_combined.txt");
     int maxNode = 0;
 
     if (myfile.is_open()){
@@ -61,13 +61,11 @@ int MaxNodeFound(){
 }
 
 
-int MaxMinNode(){
+int MaxNode(){
     string line;
-    ifstream myfile("./Databases/Email-Enron.txt");
+    ifstream myfile("./Databases/facebook_combined.txt");
 
     int maxNode = 0;
-    double minNode = numeric_limits<double>::infinity();
-    cout << minNode << '\n';
 
     if (myfile.is_open()){
 
@@ -79,26 +77,22 @@ int MaxMinNode(){
 
             int node = stoi(firstword);
             int edge = stoi(secondword);
-            
-            cout << "node  " << node << "edge" << edge << '\n';
-            if(node >> maxNode){
+
+            if(node > maxNode){
                 maxNode = node;
             }
-                
-            if(edge >> maxNode)
-                maxNode = edge;
 
-            if(node < minNode)
-                minNode = node;
-            if(edge < minNode)
-                minNode = edge;
+            if(edge > maxNode){
+                maxNode = edge;
+            }
+ 
         }
         myfile.close();
     }
     else{
         cout << "Unable to open file";
     }
-    return maxNode,minNode;
+    return maxNode;
 }
 
 
