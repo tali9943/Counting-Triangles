@@ -3,13 +3,14 @@
 #include <string>
 #include <sstream>
 #include <limits> // per numeric_limits
+#include <chrono>
 
 using namespace std;
 
 
 void edges(int** matrix, int n){
     string line;
-    ifstream myfile("CA-GrQc.txt");
+    ifstream myfile("./Databases/Email-Enron.txt");
     if (myfile.is_open()){
 
         while (getline(myfile, line)){   
@@ -37,49 +38,9 @@ void edges(int** matrix, int n){
 }
 
 
-
-int MaxMinNode(){
-    string line;
-    ifstream myfile("CA-GrQc.txt");
-    int maxNode = 0;
-    double minNode = numeric_limits<double>::infinity();
-    cout << minNode << '\n';
-
-    if (myfile.is_open()){
-
-        while (getline(myfile, line)){  
-            istringstream ss(line);
-            string firstword, secondword;
-
-            ss >> firstword >> secondword;
-
-            int node = stoi(firstword);
-            int edge = stoi(secondword);
-
-            if(node > maxNode)
-                maxNode = node;
-            if(edge > maxNode)
-                maxNode = edge;
-
-            if(node < minNode)
-                minNode = node;
-            if(edge < minNode)
-                minNode = edge;
-        }
-        myfile.close();
-    }
-    else{
-        cout << "Unable to open file";
-    }
-    return maxNode,minNode;
-}
-
-
-
-
 int MaxNodeFound(){
     string line;
-    ifstream myfile("email-Eu-core.txt");
+    ifstream myfile("./Databases/Email-Enron.txt");
     int maxNode = 0;
 
     if (myfile.is_open()){
@@ -98,4 +59,49 @@ int MaxNodeFound(){
     }
     return maxNode;
 }
+
+
+int MaxMinNode(){
+    string line;
+    ifstream myfile("./Databases/Email-Enron.txt");
+
+    int maxNode = 0;
+    double minNode = numeric_limits<double>::infinity();
+    cout << minNode << '\n';
+
+    if (myfile.is_open()){
+
+        while (getline(myfile, line)){  
+            istringstream ss(line);
+            string firstword, secondword;
+
+            ss >> firstword >> secondword;
+
+            int node = stoi(firstword);
+            int edge = stoi(secondword);
+            
+            cout << "node  " << node << "edge" << edge << '\n';
+            if(node >> maxNode){
+                maxNode = node;
+            }
+                
+            if(edge >> maxNode)
+                maxNode = edge;
+
+            if(node < minNode)
+                minNode = node;
+            if(edge < minNode)
+                minNode = edge;
+        }
+        myfile.close();
+    }
+    else{
+        cout << "Unable to open file";
+    }
+    return maxNode,minNode;
+}
+
+
+
+
 

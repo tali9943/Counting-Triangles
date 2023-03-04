@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
 #include "readFile.cpp"
 
 using namespace std;
@@ -39,8 +40,11 @@ void prinMatrix(int** matrix, int n){
 
 
 
-//conta triangoli ??????????????
+//conta triangoli 
 int countTriangles(int** matrix, int n){
+
+   auto start = std::chrono::high_resolution_clock::now();
+
    int numbers_triangles = 0;
 
    for(int i = 0; i < n; i++){
@@ -54,6 +58,13 @@ int countTriangles(int** matrix, int n){
          }
       }
    }
+
+   auto end = std::chrono::high_resolution_clock::now();
+
+   std::chrono::duration<double> total_time = end - start;
+   
+   cout << "Tempo di esecuzione: " << total_time.count() << " secondi" << std::endl;
+
    return numbers_triangles;
 }
 
@@ -65,14 +76,13 @@ int main(){
    //cout << "Inserisci il numero di vertici: ";
    //cin >> n;
 
-   int max,min = MaxMinNode();
+   //int max, min = MaxMinNode();
 
-   cout << max <<'\n',
-   cout <<min <<'\n';
-   int n = max-min;
+   int max = MaxNodeFound()+1;
+   int n = max;
 
 
-   cout <<"NODE: " << n <<'\n';
+   cout <<"NODE: " << max <<'\n';
    auto matrix = creaMatrix(n);
 
    edges(matrix,n);
