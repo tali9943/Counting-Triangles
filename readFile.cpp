@@ -17,7 +17,6 @@ int MaxNodeFound(){
                 maxNode = elem;
             }
         }
-        cout<< maxNode <<'\n';
         myfile.close();
     }
     else{
@@ -27,10 +26,26 @@ int MaxNodeFound(){
 }
 
 
-int main(){
 
-int x = MaxNodeFound();
+void edges(int** matrix, int n){
+    string line;
+    ifstream myfile("email-Eu-core.txt");
+    if (myfile.is_open()){
 
-//cout <<x;
+        while (getline(myfile, line)){   
+            int node = line[0];
+            int edge = line[1];
+            cout<<"node: "<< node <<'\n';
+            cout<<"edge: "<< edge <<'\n';
+
+            matrix[node][edge] = 1; 
+        }
+        myfile.close();
+    }
+    else{
+        cout << "Unable to open file";
+    }
 }
+
+
 

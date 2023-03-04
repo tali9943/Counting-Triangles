@@ -1,23 +1,19 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include "readFile.cpp"
 
 using namespace std;
+
 
 
 int** creaMatrix(int n){
 
    int** matrix= 0;
    matrix = new int*[n];
-
-   for(int i = 0; i < n; i++){
-      matrix[i] = new int[n];
-      for(int j = 0; j < n; j++){
-         matrix[i][j] = 0;
-      }
-   }
    return matrix;
 }
+
 
 void prinMatrix(int** matrix, int n){
    cout << "Matrice di adiacenza:" << endl;
@@ -29,21 +25,12 @@ void prinMatrix(int** matrix, int n){
    }
 }
 
-void generateEdges(int** matrix,int n){
-   srand(time(0));
-
-   for(int i = 0; i < n; i++){
-      for(int j = 0; j < n; j++){
-         int random = rand() % 2;
-         if(random == 1 && i != j){
-            matrix[i][j] = 1;
-            matrix[j][i] = 1;  
-         }
-      }
-   }
-}
 
 
+
+
+
+//conta triangoli
 int countTriangles(int** matrix, int n){
    int numbers_triangles = 0;
 
@@ -64,13 +51,20 @@ int countTriangles(int** matrix, int n){
 
 
 int main(){
-   int n; // numero di vertici
-   cout << "Inserisci il numero di vertici: ";
-   cin >> n;
 
+   //int n; // numero di vertici
+   //cout << "Inserisci il numero di vertici: ";
+   //cin >> n;
+
+   int n = MaxNodeFound();
+
+   cout << n <<'\n';
    auto matrix = creaMatrix(n);
 
-   generateEdges(matrix, n);
+   cout<<"ehi" <'\n';
+   edges(matrix,n);
+
+   //generateEdges(matrix, n);
 
    cout << "Dopo: ";
    prinMatrix(matrix, n);
