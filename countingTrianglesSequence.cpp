@@ -9,7 +9,7 @@ using namespace std;
 
 
 //Function to count the numbers of triangles in adjacency matrix
-int countTriangles(int** matrix, int n){
+int countTrianglesSeq(int** matrix, int n){
    auto start = std::chrono::high_resolution_clock::now();
    int numbers_triangles = 0;
 
@@ -35,16 +35,18 @@ int countTriangles(int** matrix, int n){
 
 
 
-void esecution(){
+void execution(){
+   std::cout << "Sequence algorithm" << '\n' << std::endl;
+
    auto start = std::chrono::high_resolution_clock::now();
    int n = MaxNode()+1;
 
-   cout <<"NODES: " << n <<'\n';
+   cout <<"NODES: " << n << std::endl;
    auto matrix = creaMatrix(n);
 
    edges(matrix,n);  
 
-   int numbers = countTriangles(matrix, n);
+   int numbers = countTrianglesSeq(matrix, n);
 
    cout << "Numbers of triangles is: " << numbers << endl;
 
@@ -57,7 +59,7 @@ void esecution(){
 
 
 int main(){
-   esecution();
+   execution();
 
    return 0;
 }

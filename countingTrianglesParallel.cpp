@@ -10,11 +10,11 @@ int num_triangles = 0;;
 
 
 
-void cont(){
+void countTrianglesPal(){
 
     auto start = std::chrono::high_resolution_clock::now();
 
-    #pragma omp paralle reduction(+:num_triangles) num_threads(10)
+    #pragma omp paralle reduction(+:num_triangles) num_threads(5)
         for (int i = 0; i < num_nodes; i++) {
             #pragma omp for
             for (int j = i+1; j < num_nodes; j++) {
@@ -28,7 +28,6 @@ void cont(){
             }
         }
 
-
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> total_time = end - start;
     cout << "Time execution countTriangles: " << total_time.count() << " seconds" << std::endl;
@@ -39,14 +38,19 @@ void cont(){
 
 
 int main() {
-
-    std::cout << "Numero Nodi: " << num_nodes << std::endl;
+    std::cout << "Parallel algorithm" << '\n' << std::endl;
+    auto start = std::chrono::high_resolution_clock::now();
+    std::cout << "NODES: " << num_nodes << std::endl;
 
     edges(adjacency_matrix,num_nodes);
 
-    cont();
+    countTrianglesPal();
 
-    std::cout << "Numero di triangoli: " << num_triangles << std::endl;
+    std::cout << "Numbers of triangles is: " << num_triangles << std::endl;
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> total_time = end - start;
+    cout << "Total time of execution: " << total_time.count() << "seconds" << std::endl;
+
     return 0;
 }
 

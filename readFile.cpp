@@ -39,7 +39,7 @@ void prinMatrix(int** matrix, int n){
 
 void edges(int** matrix, int n){
     string line;
-    ifstream myfile("./Databases/CA-GrQc.txt");
+    ifstream myfile("./Databases/facebook_combined.txt");
     if (myfile.is_open()){
 
         while (getline(myfile, line)){   
@@ -66,7 +66,7 @@ void edges(int** matrix, int n){
 
 int MaxNode(){
     string line;
-    ifstream myfile("./Databases/CA-GrQc.txt");
+    ifstream myfile("./Databases/facebook_combined.txt");
 
     int maxNode = 0;
 
