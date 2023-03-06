@@ -10,7 +10,7 @@ using namespace std;
 
 void edges(int** matrix, int n){
     string line;
-    ifstream myfile("./Databases/facebook_combined.txt");
+    ifstream myfile("./Databases/Brightkite_edges.txt");
     if (myfile.is_open()){
 
         while (getline(myfile, line)){   
@@ -25,45 +25,19 @@ void edges(int** matrix, int n){
 
             matrix[node][edge] = 1; 
             matrix[edge][node] = 1; 
-            //cout << "matrix: " << matrix[node][edge]  <<'\n';
-            
-            
-            //cout << matrix[node][edge] <<'\0';
+
         }
         myfile.close();
     }
     else{
         cout << "Unable to open file";
     }
-}
-
-
-int MaxNodeFound(){
-    string line;
-    ifstream myfile("./Databases/facebook_combined.txt");
-    int maxNode = 0;
-
-    if (myfile.is_open()){
-
-        while (getline(myfile, line)){  
-            int elem = stoi(line); 
-            if(elem > maxNode){
-                maxNode = elem;
-                //controllo maxnode
-            }
-        }
-        myfile.close();
-    }
-    else{
-        cout << "Unable to open file";
-    }
-    return maxNode;
 }
 
 
 int MaxNode(){
     string line;
-    ifstream myfile("./Databases/facebook_combined.txt");
+    ifstream myfile("./Databases/Brightkite_edges.txt");
 
     int maxNode = 0;
 
@@ -95,6 +69,29 @@ int MaxNode(){
     return maxNode;
 }
 
+
+
+
+int MaxNodeFound(){
+    string line;
+    ifstream myfile("./Databases/facebook_combined.txt");
+    int maxNode = 0;
+
+    if (myfile.is_open()){
+
+        while (getline(myfile, line)){  
+            int elem = stoi(line); 
+            if(elem > maxNode){
+                maxNode = elem;
+            }
+        }
+        myfile.close();
+    }
+    else{
+        cout << "Unable to open file";
+    }
+    return maxNode;
+}
 
 
 
