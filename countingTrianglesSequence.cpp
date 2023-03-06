@@ -7,35 +7,6 @@
 using namespace std;
 
 
-int** creaMatrix(int n){
-   int **matrix = new int *[n];
-
-   for (int i = 0; i < n; i++){
-      matrix[i] = new int[n];
-   }
-
-   // Initialize the adjacency matrix to 0
-   for (int i = 0; i < n; i++){
-      for (int j = 0; j < n; j++){
-            matrix[i][j] = 0;
-      }
-   }
-   return matrix;
-}
-
-
-//print matrix function
-void prinMatrix(int** matrix, int n){
-      for (int i = 0; i < n; i++){
-         for (int j = 0; j < n; j++){
-               cout << matrix[i][j] << " ";
-         }
-         cout << endl;
-      }
-}
-
-
-
 
 //Function to count the numbers of triangles in adjacency matrix
 int countTriangles(int** matrix, int n){

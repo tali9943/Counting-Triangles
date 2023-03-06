@@ -1,117 +1,62 @@
 #include <iostream>
-#include <fstream>
-#include <string>
+#include <vector>
+#include <random>
+#include <chrono>
+#include <thread>
+#include "readFile.cpp"
+
+
 
 using namespace std;
+using namespace chrono;
 
 
-int MaxNodeFound(){
-    string line;
-    ifstream myfile("testoprova.txt");
-    int maxNode = 0;
+const int num_threads = 4;
+int dimension = MaxNode()+1;
+int** matrix = creaMatrix(dimension);
+int count = 0;;
 
-    if (myfile.is_open()){
+void count_triangles(int** matrix, int thread_id, int n){
 
-        while (getline(myfile, line)){  
-            int elem = stoi(line); 
-            if(elem > maxNode){
-                maxNode = elem;
-                //controllo maxnode
+    int local_count = 0;
+    for (int i = thread_id; i < n; i += num_threads) {
+        for (int j = i + 1; j < n; j++) {
+            if (matrix[i][j]) {
+                for (int k = j + 1; k < n; k++) {
+                    if (matrix[j][k] && matrix[k][i]) {
+                        local_count++;
+                    }
+                }
             }
         }
-        myfile.close();
     }
-    else{
-        cout << "Unable to open file";
-    }
-    return maxNode;
+    count += local_count;
 }
 
-int** createAdjMatrix(int node){
-    string line;
-    ifstream myfile("testoprova.txt");
- 
-    if (myfile.is_open()){
-        cout <<"prova";
-        
-        // Read the first line to determine the number of vertices
-        getline(myfile, line);
+int main(){
+    
+    cout <<"dimenion: " << dimension <<'\n';
+   // int n = MaxNode()+1;
 
-        // Allocate 2D array for the adjacency matrix
-        int **adjMatrix = new int *[node];
-        for (int i = 0; i < node; i++){
-            adjMatrix[i] = new int[node];
-        }
+    //cout <<"NODES: " << n <<'\n';
+    //auto matrix = creaMatrix(n);
 
-        // Initialize the adjacency matrix to 0
-        for (int i = 0; i < node; i++){
-            for (int j = 0; j < node; j++){
-                adjMatrix[i][j] = 0;
-            }
-        }
+    edges(matrix,dimension);  
 
-        // Read the rest of the lines and update the adjacency matrix
-        int i, j;
-        while (getline(myfile, line)){
-            i = stoi(line.substr(0, line.find(" ")));
-            j = stoi(line.substr(1, line.find(" ")));
-            if(i!=j){
-                adjMatrix[i][j] = 1;
-                adjMatrix[i][j] = 1;
-            }
+    // Creazione dei thread e calcolo del numero di triangoli
+    vector<thread> threads;
 
-        }
-
-        // Print the adjacency matrix
-        for (int i = 0; i < node; i++){
-            for (int j = 0; j < node; j++){
-                cout << adjMatrix[i][j] << " ";
-            }
-            cout << endl;
-        }
-
-        return adjMatrix;
-
-
-        // Close the file
-        myfile.close();
+    for (int i = 0; i < num_threads; i++) {
+        //threads.emplace_back(count_triangles, i , dimension);
+    }
+    for (auto& t : threads) {
+        t.join();
     }
 
-    else{
-        cout << "Unable to open file";
-    }
+    // Stampa del risultato
+    cout << "Il numero di triangoli nel grafo è: " << count << endl;
 
     return 0;
 }
 
 
-int countTriangles(int** matrix, int n){
-   int numbers_triangles = 0;
-
-   for(int i = 0; i < n; i++){
-      for(int j = i+1; j < n; j++){
-         if(matrix[i][j] == 1){
-            for(int z = j+1; z < n; z++){
-               if(matrix[j][z] == 1 && matrix[z][i] == 1){
-                  numbers_triangles++;
-               }
-            }
-         }
-      }
-   }
-   return numbers_triangles;
-}
-
-
-int main(){
-
-    int n = MaxNodeFound();
-    cout << "number" << n <<'\n';
-    auto matrix = createAdjMatrix(n);
-    //cout <<matrix;
-
-   // int numbers = countTriangles(matrix, 1005);
-    //cout << "Numbers of triangles is: " << numbers << endl;
-
-
-}

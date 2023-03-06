@@ -8,9 +8,38 @@
 using namespace std;
 
 
+int** creaMatrix(int n){
+   int **matrix = new int *[n];
+
+   for (int i = 0; i < n; i++){
+      matrix[i] = new int[n];
+   }
+
+   // Initialize the adjacency matrix to 0
+   for (int i = 0; i < n; i++){
+      for (int j = 0; j < n; j++){
+            matrix[i][j] = 0;
+      }
+   }
+   return matrix;
+}
+
+
+
+
+//print matrix function
+void prinMatrix(int** matrix, int n){
+      for (int i = 0; i < n; i++){
+         for (int j = 0; j < n; j++){
+               cout << matrix[i][j] << " ";
+         }
+         cout << endl;
+      }
+}
+
 void edges(int** matrix, int n){
     string line;
-    ifstream myfile("./Databases/Brightkite_edges.txt");
+    ifstream myfile("./Databases/CA-GrQc.txt");
     if (myfile.is_open()){
 
         while (getline(myfile, line)){   
@@ -37,7 +66,7 @@ void edges(int** matrix, int n){
 
 int MaxNode(){
     string line;
-    ifstream myfile("./Databases/Brightkite_edges.txt");
+    ifstream myfile("./Databases/CA-GrQc.txt");
 
     int maxNode = 0;
 
@@ -72,26 +101,7 @@ int MaxNode(){
 
 
 
-int MaxNodeFound(){
-    string line;
-    ifstream myfile("./Databases/facebook_combined.txt");
-    int maxNode = 0;
 
-    if (myfile.is_open()){
-
-        while (getline(myfile, line)){  
-            int elem = stoi(line); 
-            if(elem > maxNode){
-                maxNode = elem;
-            }
-        }
-        myfile.close();
-    }
-    else{
-        cout << "Unable to open file";
-    }
-    return maxNode;
-}
 
 
 
