@@ -1,41 +1,37 @@
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <algorithm>
-
+#include <chrono>
+#include <thread>
 using namespace std;
 
+int countTrianglesParallel(int** matrix, int n, int num_threads){
+    auto start = std::chrono::high_resolution_clock::now();
+    int numbers_triangles = 0;
 
-vector<vector<int>> createMatrix(){
-    
-    string filename = "./Databases/Brightkite_edges.txt"; 
-    ifstream input_file(filename); 
-    vector<vector<int>> adjacency_matrix; // matrice di adiacenza
-
-    // legge il file di input riga per riga
-    string line;
-    while (getline(input_file, line)) {
-        istringstream iss(line);
-        int node1, node2;
-        if (!(iss >> node1 >> node2)) { break; } // se la riga non contiene due numeri, esce dal ciclo
-        int max_node = max(node1, node2);
-        if (max_node >= adjacency_matrix.size()) { // se il massimo nodo trovato supera la dimensione della matrice, la espande
-            adjacency_matrix.resize(max_node+1);
-            for (auto& row : adjacency_matrix) {
-                row.resize(max_node+1);
+    std::vector<std::thread> threads;
+    for(int t = 0; t < num_threads; t++){
+        threads.emplace_back([&](){
+            for(int i = t; i < n; i+=num_threads){
+                for(int j = i+1; j < n; j++){
+                    if(matrix[i][j] == 1){
+                        for(int z = j+1; z < n; z++){
+                            if(matrix[j][z] == 1 && matrix[z][i] == 1){
+                                numbers_triangles++;
+                            }
+                        }
+                    }
+                }
             }
-        }
-        adjacency_matrix[node1][node2] = 1; // imposta il valore della matrice di adiacenza a 1
-        adjacency_matrix[node2][node1] = 1; // la matrice di adiacenza di un grafo non orientato è simmetrica
+        });
     }
-    return adjacency_matrix;
+
+    for(auto& t : threads){
+        t.join();
+    }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    chrono::duration<double> total_time = end - start;
+
+    cout << "Time of execution countingTriangles: " << total_time.count() << " seconds" << std::endl;
+    return numbers_triangles;
 }
 
-
-
-int main() {
- 
-    auto matrix = createMatrix();
-    cout << matrix.size();
-}

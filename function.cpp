@@ -1,4 +1,3 @@
-#include "readFile.cpp"
 #include <iostream>
 #include <vector>
 #include <omp.h>
@@ -6,11 +5,37 @@
 #include <pthread.h>
 #include <chrono>
 
+
 using namespace std;
 
 
+int countTrianglesSequence(int** matrix, int num_nodes){
+   auto start = chrono::high_resolution_clock::now();
+   int numbers_triangles = 0;
 
-void countTrianglesPal(int** adjacency_matrix, int num_nodes){
+   for(int i = 0; i < num_nodes; i++){
+      for(int j = i+1; j < num_nodes; j++){
+         if(matrix[i][j] == 1){
+            for(int z = j+1; z < num_nodes; z++){
+               if(matrix[j][z] == 1 && matrix[z][i] == 1){
+                  numbers_triangles++;
+               }
+            }
+         }
+      }
+   }
+
+   auto end = chrono::high_resolution_clock::now();
+   chrono::duration<double> total_time = end - start;
+
+   cout <<'\n';
+   cout << "Time of execution countingTriangles: " << total_time.count()<< "seconds" << endl;
+   return numbers_triangles;
+}
+
+
+
+void countTrianglesParallel(int** adjacency_matrix, int num_nodes){
     int num_triangles = 0;
 
     for(int num_threads = 1; num_threads < 21; num_threads++){
@@ -40,38 +65,3 @@ void countTrianglesPal(int** adjacency_matrix, int num_nodes){
         num_triangles = 0;
     }
 }
-
-
-auto executionParallel(){
-    cout << "Parallel algorithm" << '\n' << endl;
-
-    auto start = chrono::high_resolution_clock::now();
-    int num_nodes = MaxNode()+1;
-
-    cout << "NODES: " << num_nodes << endl;
-    int** adjacency_matrix = creaMatrix(num_nodes);
-
-    edges(adjacency_matrix,num_nodes);
-
-
-    countTrianglesPal(adjacency_matrix,num_nodes);
-
-    auto end = chrono::high_resolution_clock::now();
-    chrono::duration<double> total_time = end - start;
-    cout << "Total time of execution: " << total_time.count() << "seconds" << std::endl;
-
-    return total_time.count();
-}
-
-
-/*
-int main(){
-    
-    auto timee = executionParallel();
-    cout << timee << '\n';
-}
-*/
-
-
-
-
