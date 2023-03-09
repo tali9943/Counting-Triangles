@@ -10,6 +10,8 @@
 using namespace std;
 
 
+auto path_name = "./Databases/Email-Enron.txt";
+
 int** creaMatrix(int n){
    int **matrix = new int *[n];
 
@@ -41,7 +43,7 @@ void prinMatrix(int** matrix, int n){
 
 void edges(int** matrix, int n){
     string line;
-    ifstream myfile("./Databases/facebook_combined.txt");
+    ifstream myfile(path_name);
     if (myfile.is_open()){
 
         while (getline(myfile, line)){   
@@ -68,7 +70,7 @@ void edges(int** matrix, int n){
 
 int MaxNode(){
     string line;
-    ifstream myfile("./Databases/facebook_combined.txt");
+    ifstream myfile(path_name);
 
     int maxNode = 0;
 
