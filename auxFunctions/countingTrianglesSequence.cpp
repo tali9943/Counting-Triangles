@@ -5,12 +5,11 @@
 #include <vector>
 #include <omp.h>
 #include <thread>
-#include <pthread.h>
 #include "readFile.cpp"
 using namespace std;
 
 
-int countTrianglesSeq(int** matrix, int num_nodes){
+int countTrianglesSequence(int** matrix, int num_nodes){
    auto start = chrono::high_resolution_clock::now();
    int numbers_triangles = 0;
 
@@ -33,30 +32,5 @@ int countTrianglesSeq(int** matrix, int num_nodes){
    cout << "Time of execution countingTriangles: " << total_time.count()<< "seconds" << endl;
    return numbers_triangles;
 }
-
-
-
-auto executionSequence(){
-   cout << "Sequence algorithm" << '\n' << endl;
-
-   auto start = chrono::high_resolution_clock::now();
-   int num_nodes = MaxNode()+1;
-
-   cout <<"NODES: " << num_nodes << endl;
-   int** matrix = creaMatrix(num_nodes);
-
-   edges(matrix,num_nodes);  
-
-   int numbers = countTrianglesSeq(matrix, num_nodes);
-
-   cout << "Numbers of triangles is: " << numbers << endl;
-
-   auto end = chrono::high_resolution_clock::now();
-   chrono::duration<double> total_time = end - start;
-   cout << "Total time of execution: " << total_time.count() << "seconds" << endl;
-
-   return total_time.count();
-}
-
 
 

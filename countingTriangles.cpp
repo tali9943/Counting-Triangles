@@ -5,20 +5,22 @@
 #include <vector>
 #include <omp.h>
 #include <thread>
-#include <pthread.h>
+#include <filesystem>
 #include "readFile.cpp"
 #include "function.cpp"
+
 using namespace std;
 
 
 auto executionSequence(int** adjacency_matrix, int num_nodes){
+
    cout << "SEQUENCE ALGORITHM" << '\n' << endl;
 
    auto start = chrono::high_resolution_clock::now();
    
-   int numbers = countTrianglesSequence(adjacency_matrix, num_nodes);
+   int numbers_triangles = countTrianglesSequence(adjacency_matrix, num_nodes);
 
-   cout << "Numbers of triangles is: " << numbers << endl;
+   cout << "Numbers of triangles is: " << numbers_triangles << endl;
 
    auto end = chrono::high_resolution_clock::now();
    chrono::duration<double> total_time = end - start;
@@ -29,20 +31,19 @@ auto executionSequence(int** adjacency_matrix, int num_nodes){
 
 
 
-
-auto executionParallel(int** adjacency_matrix, int num_nodes){
+void executionParallel(int** adjacency_matrix, int num_nodes, double time){
     cout << "PARALLEL ALGORITHM" << '\n' << endl;
 
     auto start = chrono::high_resolution_clock::now();
 
-    countTrianglesParallel(adjacency_matrix,num_nodes);
+    vector<std::pair<int, double>> results = countTrianglesParallel(adjacency_matrix,num_nodes,time);
 
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> total_time = end - start;
     cout << "Total time of parallel algorithm: " << total_time.count() << "seconds" << std::endl;
-
-    return total_time.count();
+    createResults(results);
 }
+
 
 
 int main(){
@@ -56,9 +57,8 @@ int main(){
 
 
     auto sequence_time = executionSequence(adjacency_matrix,num_nodes);
-    cout <<sequence_time << '\n';
     cout << '\n';
-    auto parallel_time = executionParallel(adjacency_matrix, num_nodes);
+    executionParallel(adjacency_matrix, num_nodes, sequence_time);
 
     return 0;
 }

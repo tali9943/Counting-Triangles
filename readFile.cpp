@@ -4,6 +4,8 @@
 #include <sstream>
 #include <limits> // per numeric_limits
 #include <chrono>
+#include <filesystem>
+#include <vector>
 
 using namespace std;
 
@@ -97,6 +99,29 @@ int MaxNode(){
     }
     return maxNode;
 }
+
+
+
+void createResults(vector<pair<int, double>> data){
+
+    // Impostiamo la directory di output
+    filesystem::path output_dir("./outputResults");
+
+    // Verifichiamo se la directory esiste, altrimenti la creiamo
+    if (!filesystem::exists(output_dir)) {
+        filesystem::create_directory(output_dir);
+    }
+
+    // Creiamo il file di testo nella directory di output
+    ofstream outfile(output_dir / "results.txt"); // apriamo il file in scrittura
+    outfile <<"Numbers of threads" << "   " << "speedup" << endl;
+    for (const auto& p : data) {
+        outfile << p.first << " " << p.second << endl;
+    }
+
+    outfile.close(); // chiudiamo il file
+}
+
 
 
 
