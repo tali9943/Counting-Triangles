@@ -6,6 +6,8 @@ with open('./outputResults/results.txt', 'r') as file:
     # Leggi i dati dal file e salva i valori in due liste separate
     x = []
     y = []
+    
+    file.readline()
     for line in file:
         data = line.split()
         x.append(int(data[0]))
@@ -18,8 +20,7 @@ plt.plot(x, y, color = 'green',
          linestyle = 'solid', marker = 'o',
          markerfacecolor = 'red', markersize = 5)
 
-plt.xticks(range(0, np.size(x)))
-
+plt.xticks(range(0,np.size(x)))  
 # Aggiungi una griglia al grafico
 plt.grid()
 

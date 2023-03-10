@@ -116,7 +116,7 @@ void createResults(vector<pair<int, double>> data){
 
     // Creiamo il file di testo nella directory di output
     ofstream outfile(output_dir / "results.txt"); // apriamo il file in scrittura
-    outfile <<"Numbers of threads" << "   " << "speedup" << endl;
+    outfile <<"Numbers of threads" << "   " << "Speedup" << endl;
     for (const auto& p : data) {
         outfile << p.first << " " << p.second << endl;
     }

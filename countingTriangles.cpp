@@ -43,8 +43,9 @@ vector<pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num
 
         auto start = chrono::high_resolution_clock::now();
 
-        #pragma omp parallel for reduction(+:num_triangles) num_threads(num_threads)
+        #pragma omp parallel reduction(+:num_triangles) num_threads(num_threads)
         for (int i = 0; i < num_nodes; i++) {
+            #pragma omp for schedule(static) nowait
             for (int j = i+1; j < num_nodes; j++) {
                 if (adjacency_matrix[i][j] == 1) {
                     for (int k = j+1; k < num_nodes; k++) {
