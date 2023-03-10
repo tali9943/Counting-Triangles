@@ -99,7 +99,7 @@ int MaxNode(){
     else{
         cout << "Unable to open file";
     }
-    return maxNode;
+    return maxNode+1;
 }
 
 

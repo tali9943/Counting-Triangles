@@ -32,12 +32,12 @@ auto executionSequence(int** adjacency_matrix, int num_nodes){
 
 
 
-void executionParallel(int** adjacency_matrix, int num_nodes, double time, int threads){
+void executionParallel(int** adjacency_matrix, int num_nodes, double time, int num_threads){
     cout << "PARALLEL ALGORITHM" << '\n' << endl;
 
     auto start = chrono::high_resolution_clock::now();
 
-    vector<std::pair<int, double>> results = countTrianglesParallel(adjacency_matrix,num_nodes,time, threads );
+    vector<pair<int, double>> results = countTrianglesParallel(adjacency_matrix,num_nodes,time, num_threads );
 
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> total_time = end - start;
@@ -49,7 +49,7 @@ void executionParallel(int** adjacency_matrix, int num_nodes, double time, int t
 
 int main(){
 
-    int num_nodes = MaxNode()+1;
+    int num_nodes = MaxNode();
     cout <<"NODES: " << num_nodes << endl;
     
     int** adjacency_matrix = creaMatrix(num_nodes);
@@ -61,7 +61,7 @@ int main(){
     cout << '\n';
 
     int num_threads;
-    cout << "Inserisci il numero di threads: ";
+    cout << "Insert the numbers of threads: ";
     cin >> num_threads;
     executionParallel(adjacency_matrix, num_nodes, sequence_time,num_threads);
 

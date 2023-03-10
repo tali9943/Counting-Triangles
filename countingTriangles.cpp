@@ -64,7 +64,7 @@ vector<pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num
         cout << "Numbers of thread: " << num_threads << endl;
         cout << "Numbers of triangles is: " << num_triangles << endl;
         cout << "Time execution countTriangles: " << time_parallel << " seconds" << std::endl;
-        cout << "Speedup: " << speedup << std::endl;
+        cout << "Speedup: " << speedup << endl;
         cout << '\n';
         
         data.push_back(make_pair(num_threads, speedup));
