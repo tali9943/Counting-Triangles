@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Apri il file di testo in modalità lettura
 with open('./outputResults/results.txt', 'r') as file:
@@ -11,15 +12,22 @@ with open('./outputResults/results.txt', 'r') as file:
         y.append(float(data[1]))
 
 # Crea un grafico a dispersione dei dati
-plt.scatter(x, y)
+#plt.plot(x, y)
+
+plt.plot(x, y, color = 'green',
+         linestyle = 'solid', marker = 'o',
+         markerfacecolor = 'red', markersize = 5)
+
+plt.xticks(range(0, np.size(x)))
 
 # Aggiungi una griglia al grafico
 plt.grid()
 
 # Aggiungi etichette agli assi x e y e un titolo al grafico
-plt.xlabel('Asse x')
-plt.ylabel('Asse y')
+plt.xlabel('Numbers of threads')
+plt.ylabel('Speedup')
 plt.title('Grafico a dispersione')
 
 # Mostra il grafico
-plt.show()
+plt.savefig("./outputResults/plotResults.png")
+

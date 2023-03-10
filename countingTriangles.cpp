@@ -34,7 +34,7 @@ int countTrianglesSequence(int** matrix, int num_nodes){
 
 
 
-vector<std::pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num_nodes, double time_sequence, int threads){
+vector<pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num_nodes, double time_sequence, int threads){
     int num_triangles = 0;
 
     vector<pair<int, double>> data;
