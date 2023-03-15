@@ -2,47 +2,47 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <limits> // per numeric_limits
 #include <chrono>
 #include <filesystem>
 #include <vector>
 
 using namespace std;
 
-string path_name = "./Databases/Email-Enron.txt"; 
-//string path_name = "./Databases/facebook_combined.txt";     //sparso
+//string path_name = "./Databases/Email-Enron.txt"; 
+string path_name = "./Databases/facebook_combined.txt";     //sparso
 //string path_name = "./Databases/denseGraph4039.txt";      //denso
 
 int** creaMatrix(int n){
-   int **matrix = new int *[n];
+   int **adjacency_matrix = new int *[n];
 
    for (int i = 0; i < n; i++){
-      matrix[i] = new int[n];
+      adjacency_matrix[i] = new int[n];
    }
 
-   // Initialize the adjacency matrix to 0
+   // Initialize the adjacency matrix
    for (int i = 0; i < n; i++){
       for (int j = 0; j < n; j++){
-            matrix[i][j] = 0;
+            adjacency_matrix[i][j] = 0;
       }
    }
-   return matrix;
+   return adjacency_matrix;
 }
 
 
 
 
 //print matrix function
-void prinMatrix(int** matrix, int n){
+void prinMatrix(int** adjacency_matrix, int n){
       for (int i = 0; i < n; i++){
          for (int j = 0; j < n; j++){
-               cout << matrix[i][j] << " ";
+               cout << adjacency_matrix[i][j] << " ";
          }
          cout << endl;
       }
 }
 
-void edges(int** matrix, int n){
+//insert edges into the adjacency matrix
+void edges(int** adjacency_matrix, int n){
     string line;
     ifstream myfile(path_name);
     if (myfile.is_open()){
@@ -57,8 +57,8 @@ void edges(int** matrix, int n){
             int node = stoi(firstword);
             int edge = stoi(secondword);
 
-            matrix[node][edge] = 1; 
-            matrix[edge][node] = 1; 
+            adjacency_matrix[node][edge] = 1; 
+            adjacency_matrix[edge][node] = 1; 
 
         }
         myfile.close();
@@ -118,11 +118,13 @@ void createResults(vector<pair<int, double>> data){
     // Creiamo il file di testo nella directory di output
     ofstream outfile(output_dir / "results.txt"); // apriamo il file in scrittura
     outfile <<"Numbers of threads" << "   " << "Speedup" << endl;
+    outfile << path_name << endl;
+
     for (const auto& p : data) {
         outfile << p.first << " " << p.second << endl;
     }
 
-    outfile.close(); // chiudiamo il file
+    outfile.close(); 
 }
 
 

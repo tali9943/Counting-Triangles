@@ -1,6 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import random as rnd
+import os
+
+def plitString(path):
+    head_tail = os.path.split(path)
+    path_name = head_tail[1].split('.')
+    return path_name[0]
 
 
 def createPlot():
@@ -10,6 +16,9 @@ def createPlot():
         y = []
         
         file.readline()
+        name = file.readline()
+        path_name = plitString(name)
+
         for line in file:
             data = line.split()
             x.append(int(data[0]))
@@ -33,7 +42,8 @@ def createPlot():
     plt.legend()
 
     #save the result 
-    plt.savefig("./outputResults/plotResults"+ str(rnd.randrange(1,15)) +".png")
+    #plt.savefig("./outputResults/plotResults"+ str(rnd.randrange(1,15)) +".png")
+    plt.savefig("./outputResults/"+ path_name +".png")
     
 
 

@@ -3,21 +3,20 @@
 #include <omp.h>
 #include <thread>
 #include <chrono>
-#include <typeinfo>
-#include <bits/stdc++.h>
+
 
 using namespace std;
 
 
-long long countTrianglesSequence(int** matrix, int num_nodes){
+long long countTrianglesSequence(int** adjacency_matrix, int num_nodes){
    auto start = chrono::high_resolution_clock::now();
    long long numbers_triangles = 0;
 
    for(int i = 0; i < num_nodes; i++){
       for(int j = i+1; j < num_nodes; j++){
-         if(matrix[i][j] == 1){
+         if(adjacency_matrix[i][j] == 1){
             for(int z = j+1; z < num_nodes; z++){
-               if(matrix[j][z] == 1 && matrix[z][i] == 1){
+               if(adjacency_matrix[j][z] == 1 && adjacency_matrix[z][i] == 1){
                     numbers_triangles++;
                }
             }
