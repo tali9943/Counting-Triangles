@@ -9,8 +9,9 @@
 
 using namespace std;
 
-
-auto path_name = "./Databases/Email-Enron.txt";
+string path_name = "./Databases/Email-Enron.txt"; 
+//string path_name = "./Databases/facebook_combined.txt";     //sparso
+//string path_name = "./Databases/denseGraph4039.txt";      //denso
 
 int** creaMatrix(int n){
    int **matrix = new int *[n];

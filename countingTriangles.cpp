@@ -3,39 +3,39 @@
 #include <omp.h>
 #include <thread>
 #include <chrono>
-
+#include <typeinfo>
+#include <bits/stdc++.h>
 
 using namespace std;
 
 
-int countTrianglesSequence(int** matrix, int num_nodes){
+long long countTrianglesSequence(int** matrix, int num_nodes){
    auto start = chrono::high_resolution_clock::now();
-   int numbers_triangles = 0;
+   long long numbers_triangles = 0;
 
    for(int i = 0; i < num_nodes; i++){
       for(int j = i+1; j < num_nodes; j++){
          if(matrix[i][j] == 1){
             for(int z = j+1; z < num_nodes; z++){
                if(matrix[j][z] == 1 && matrix[z][i] == 1){
-                  numbers_triangles++;
+                    numbers_triangles++;
                }
             }
          }
       }
    }
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double> total_time = end - start;
 
-   auto end = chrono::high_resolution_clock::now();
-   chrono::duration<double> total_time = end - start;
-
-   cout <<'\n';
-   cout << "Time of execution countingTriangles: " << total_time.count()<< "seconds" << endl;
-   return numbers_triangles;
+    cout <<'\n';
+    cout << "Time of execution countingTriangles: " << total_time.count()<< "seconds" << endl;
+    return numbers_triangles;
 }
 
 
 
 vector<pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num_nodes, double time_sequence, int threads){
-    int num_triangles = 0;
+    long long num_triangles = 0;
 
     vector<pair<int, double>> data;
 

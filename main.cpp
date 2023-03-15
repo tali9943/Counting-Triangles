@@ -19,7 +19,7 @@ auto executionSequence(int** adjacency_matrix, int num_nodes){
 
    auto start = chrono::high_resolution_clock::now();
    
-   int numbers_triangles = countTrianglesSequence(adjacency_matrix, num_nodes);
+   long long numbers_triangles = countTrianglesSequence(adjacency_matrix, num_nodes);
 
    cout << "Numbers of triangles is: " << numbers_triangles << endl;
 
