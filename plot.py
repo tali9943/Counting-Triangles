@@ -28,7 +28,7 @@ def createPlot():
     plt.plot(x, y, color = 'green',linestyle = 'solid', marker = 'o', markerfacecolor = 'blue', markersize = 5, label='Speedup')
 
     xvals = np.array(plt.gca().set_xlim([0,len(x)]))
-    yvals = np.array(plt.gca().set_ylim([0, 30])) #set the y axes
+    yvals = np.array(plt.gca().set_ylim([0, len(x)])) #set the y axes
 
     plt.plot(xvals, yvals, color='red', linestyle='dashed', linewidth=2, label='Linear speedup')
  

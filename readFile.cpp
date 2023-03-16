@@ -8,8 +8,9 @@
 
 using namespace std;
 
+string path_name = "./Databases/Brightkite_edges.txt"; 
 //string path_name = "./Databases/Email-Enron.txt"; 
-string path_name = "./Databases/facebook_combined.txt";     //sparso
+//string path_name = "./Databases/facebook_combined.txt";     //sparso
 //string path_name = "./Databases/denseGraph4039.txt";      //denso
 
 int** creaMatrix(int n){
@@ -50,12 +51,12 @@ void edges(int** adjacency_matrix, int n){
         while (getline(myfile, line)){   
 
             istringstream ss(line);
-            string firstword, secondword;
+            string first, second;
 
-            ss >> firstword >> secondword;
+            ss >> first >> second;
 
-            int node = stoi(firstword);
-            int edge = stoi(secondword);
+            int node = stoi(first);
+            int edge = stoi(second);
 
             adjacency_matrix[node][edge] = 1; 
             adjacency_matrix[edge][node] = 1; 
@@ -79,12 +80,12 @@ int MaxNode(){
 
         while (getline(myfile, line)){  
             istringstream ss(line);
-            string firstword, secondword;
+            string first, second;
 
-            ss >> firstword >> secondword;
+            ss >> first >> second;
 
-            int node = stoi(firstword);
-            int edge = stoi(secondword);
+            int node = stoi(first);
+            int edge = stoi(second);
 
             if(node > maxNode){
                 maxNode = node;
