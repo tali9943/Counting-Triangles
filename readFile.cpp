@@ -15,11 +15,11 @@ facebook_combined = *PICCOLO* - NODES: 4039 EDGE: 88234  TRIANGLES: 1612010
 denseGraph4039 = *DENSO* - NODES: 4039 EDGE: XXX  TRIANGLES: 1612010 
 */
 
-string path_name = "./Databases/CA-GrQc.txt"; 
+//string path_name = "./Databases/CA-GrQc.txt"; 
 //string path_name = "./Databases/email-Eu-core.txt";                 
 //string path_name = "./Databases/Email-Enron.txt"; 
 //string path_name = "./Databases/facebook_combined.txt";     //sparso 
-//string path_name = "./Databases/denseGraph4039.txt";      //denso
+string path_name = "./Databases/denseGraph4039.txt";      //denso
 
 int** creaMatrix(int n){
    int **adjacency_matrix = new int *[n];
