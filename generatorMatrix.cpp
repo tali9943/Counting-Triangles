@@ -1,11 +1,32 @@
 #include <iostream>
-#include <vector>
-#include <omp.h>
-#include <thread>
+#include <fstream>
+#include <string>
+#include <sstream>
 #include <chrono>
-
+#include <filesystem>
+#include <vector>
 
 using namespace std;
+
+
+
+int** creaMatrix(int n){
+   int **adjacency_matrix = new int *[n];
+
+   for (int i = 0; i < n; i++){
+      adjacency_matrix[i] = new int[n];
+   }
+   
+   // Initialize the adjacency matrix
+   for (int i = 0; i < n; i++){
+      for (int j = 0; j < n; j++){
+            adjacency_matrix[i][j] = 1;
+      }
+   }
+   return adjacency_matrix;
+}
+
+
 
 
 long long countTrianglesSequence(int** adjacency_matrix, int num_nodes){
@@ -47,8 +68,8 @@ vector<pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num
             #pragma omp for schedule(static) nowait
             for (int j = i+1; j < num_nodes; j++) {
                 if (adjacency_matrix[i][j] == 1) {
-                    for (int z = j+1; z < num_nodes; z++) {
-                        if (adjacency_matrix[i][z] == 1 && adjacency_matrix[j][z] == 1) {
+                    for (int k = j+1; k < num_nodes; k++) {
+                        if (adjacency_matrix[i][k] == 1 && adjacency_matrix[j][k] == 1) {
                             num_triangles++; 
                         }
                     }
@@ -72,4 +93,62 @@ vector<pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num
         num_triangles = 0;
     }
     return data;
+}
+
+
+auto executionSequence(int** adjacency_matrix, int num_nodes){
+
+   cout << "SEQUENCE ALGORITHM" << '\n' << endl;
+
+   auto start = chrono::high_resolution_clock::now();
+   
+   long long numbers_triangles = countTrianglesSequence(adjacency_matrix, num_nodes);
+
+   cout << "Numbers of triangles is: " << numbers_triangles << endl;
+
+   auto end = chrono::high_resolution_clock::now();
+   chrono::duration<double> total_time = end - start;
+   cout << "Total time of execution of sequence algorithm: " << total_time.count() << "seconds" << endl;
+
+   return total_time.count();
+}
+
+
+
+void executionParallel(int** adjacency_matrix, int num_nodes, double time, int num_threads){
+    cout << "PARALLEL ALGORITHM" << '\n' << endl;
+
+    auto start = chrono::high_resolution_clock::now();
+
+    vector<pair<int, double>> results = countTrianglesParallel(adjacency_matrix,num_nodes,time, num_threads );
+
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double> total_time = end - start;
+    cout << "Total time of parallel algorithm: " << total_time.count() << "seconds" << std::endl;
+    //createResults(results);
+}
+
+
+
+int main(){
+
+    int num_nodes;
+    cout << "Insert the number of nodes: ";
+    cin >> num_nodes;
+
+    int** adjacency_matrix = creaMatrix(num_nodes);
+
+    auto sequence_time = executionSequence(adjacency_matrix,num_nodes);
+    cout << '\n';
+
+    int num_threads;
+    cout << "Insert the number of threads: ";
+    cin >> num_threads;
+    executionParallel(adjacency_matrix, num_nodes, sequence_time,num_threads);
+
+
+
+
+
+    return 0;
 }

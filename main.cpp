@@ -61,7 +61,7 @@ int main(){
     cout << '\n';
 
     int num_threads;
-    cout << "Insert the numbers of threads: ";
+    cout << "Insert the number of threads: ";
     cin >> num_threads;
     executionParallel(adjacency_matrix, num_nodes, sequence_time,num_threads);
 
