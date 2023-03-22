@@ -11,7 +11,7 @@ def plitString(path):
 
 def createPlot():
     with open('./outputResults/results.txt', 'r') as file:    #open txt file to read datas
-        # read and save the data 
+        #read and save the data 
         x = []
         y = []
         
@@ -24,25 +24,23 @@ def createPlot():
             x.append(int(data[0]))
             y.append(float(data[1]))
 
-    # define the plot 
+    #define the plot 
     plt.plot(x, y, color = 'green',linestyle = 'solid', marker = 'o', markerfacecolor = 'blue', markersize = 5, label='Speedup')
 
-    xvals = np.array(plt.gca().set_xlim([0,len(x)]))
-    yvals = np.array(plt.gca().set_ylim([0, len(x)])) #set the y axes
+    xvals = np.array(plt.gca().set_xlim([0,25]))
+    yvals = np.array(plt.gca().set_ylim([0, 25]))
 
     plt.plot(xvals, yvals, color='red', linestyle='dashed', linewidth=2, label='Linear speedup')
  
-    # add grid in the plot
+    #add grid in the plot
     plt.grid()
 
-    plt.xlabel('Numbers of threads')
+    plt.xlabel('Number of threads')
     plt.ylabel('Speedup')
-    plt.title('Grafico a dispersione')
+    plt.title('Graph')
 
     plt.legend()
 
-    #save the result 
-    #plt.savefig("./outputResults/plotResults"+ str(rnd.randrange(1,15)) +".png")
     plt.savefig("./outputResults/"+ path_name +".png")
     
 

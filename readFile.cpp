@@ -8,19 +8,12 @@
 
 using namespace std;
 
-/*
-CA-GrQc =  *SPARSO* NODES: 26197 EDGES:14496 TRIANGLES: 48260 
-Email-Enron = *GRANDE* NODES: 36692 EDGES: 183831  TRIANGLES: 727044 
-facebook_combined = *PICCOLO* - NODES: 4039 EDGE: 88234  TRIANGLES: 1612010 
-denseGraph4039 = *DENSO* - NODES: 4039 EDGE: XXX  TRIANGLES: 1612010 
-*/
-
-//string path_name = "./Databases/CA-GrQc.txt"; 
-//string path_name = "./Databases/email-Eu-core.txt";                 
+//string path_name = "./Databases/CA-GrQc.txt";           
 //string path_name = "./Databases/Email-Enron.txt"; 
-//string path_name = "./Databases/facebook_combined.txt";     //sparso 
-string path_name = "./Databases/denseGraph4039.txt";      //denso
+//string path_name = "./Databases/facebook_combined.txt";    
+string path_name = "./Databases/denseGraph4039.txt";      
 
+//function used to inizialize the adjacenty matrix
 int** creaMatrix(int n){
    int **adjacency_matrix = new int *[n];
 
@@ -40,7 +33,7 @@ int** creaMatrix(int n){
 
 
 
-//print matrix function
+//print adjacenty matrix
 void prinMatrix(int** adjacency_matrix, int n){
       for (int i = 0; i < n; i++){
          for (int j = 0; j < n; j++){
@@ -78,6 +71,7 @@ void edges(int** adjacency_matrix, int n){
 }
 
 
+//function used to search the maximum node of the graph
 int MaxNode(){
     string line;
     ifstream myfile(path_name);
@@ -114,22 +108,23 @@ int MaxNode(){
 
 
 
+//function used to create a txt file with the results of the parallel execution
 void createResults(vector<pair<int, double>> data){
 
-    // Impostiamo la directory di output
+    //directory of output
     filesystem::path output_dir("./outputResults");
 
-    // Verifichiamo se la directory esiste, altrimenti la creiamo
-    if (!filesystem::exists(output_dir)) {
+    //checks of the directory for the output
+    if (!filesystem::exists(output_dir)){
         filesystem::create_directory(output_dir);
     }
 
-    // Creiamo il file di testo nella directory di output
-    ofstream outfile(output_dir / "results.txt"); // apriamo il file in scrittura
+    // generates output file
+    ofstream outfile(output_dir / "results.txt"); 
     outfile <<"Numbers of threads" << "   " << "Speedup" << endl;
     outfile << path_name << endl;
 
-    for (const auto& p : data) {
+    for (const auto& p : data){
         outfile << p.first << " " << p.second << endl;
     }
 

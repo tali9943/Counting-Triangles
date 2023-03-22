@@ -4,10 +4,10 @@
 #include <thread>
 #include <chrono>
 
-
 using namespace std;
 
 
+//sequence algorithm
 long long countTrianglesSequence(int** adjacency_matrix, int num_nodes){
    auto start = chrono::high_resolution_clock::now();
    long long numbers_triangles = 0;
@@ -33,9 +33,9 @@ long long countTrianglesSequence(int** adjacency_matrix, int num_nodes){
 
 
 
+//parallel algorithm
 vector<pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num_nodes, double time_sequence, int threads){
     long long num_triangles = 0;
-
     vector<pair<int, double>> data;
 
     for(int num_threads = 1; num_threads < threads; num_threads++){
@@ -58,8 +58,8 @@ vector<pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num
 
         auto end = chrono::high_resolution_clock::now();
         chrono::duration<double> total_time = end - start;
-        auto time_parallel = total_time.count();
-        auto speedup = time_sequence / time_parallel;
+        auto time_parallel = total_time.count(); 
+        auto speedup = time_sequence / time_parallel;   //speedup
 
         cout << "Numbers of thread: " << num_threads << endl;
         cout << "Numbers of triangles is: " << num_triangles << endl;
@@ -67,9 +67,9 @@ vector<pair<int, double>> countTrianglesParallel(int** adjacency_matrix, int num
         cout << "Speedup: " << speedup << endl;
         cout << '\n';
         
-        data.push_back(make_pair(num_threads, speedup));
+        data.push_back(make_pair(num_threads, speedup));  //save the results into a vector of pairs
 
-        num_triangles = 0;
+        num_triangles = 0;  
     }
     return data;
 }
